@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Android_Ispit.Views;
+using Android_Ispit.Views.Pages;
 
 namespace Android_Ispit
 {
@@ -11,11 +11,14 @@ namespace Android_Ispit
         {
             InitializeComponent();
             _services = services;
+
+            // Nimbus visual direction is dark-only by design - force it regardless of system theme.
+            UserAppTheme = AppTheme.Dark;
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            var window = new Window(_services.GetRequiredService<AuthTabbedPage>())
+            var window = new Window(_services.GetRequiredService<AuthPage>())
             {
                 Width = 390,
                 Height = 850

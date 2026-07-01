@@ -5,12 +5,12 @@ using Android_Ispit.ViewModels;
 
 namespace Android_Ispit.Views.Pages
 {
-    public partial class UsersPage : ContentPage
+    public partial class CategoriesPage : ContentPage
     {
-        private readonly UsersViewModel _viewModel;
+        private readonly CategoriesViewModel _viewModel;
         private readonly IServiceProvider _services;
 
-        public UsersPage(UsersViewModel viewModel, IServiceProvider services)
+        public CategoriesPage(CategoriesViewModel viewModel, IServiceProvider services)
         {
             InitializeComponent();
             _viewModel = viewModel;
@@ -21,7 +21,7 @@ namespace Android_Ispit.Views.Pages
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await _viewModel.LoadUsersCommand.ExecuteAsync(null);
+            await _viewModel.LoadCategoriesCommand.ExecuteAsync(null);
         }
 
         private void OnSearchButtonPressed(object? sender, EventArgs e)
@@ -31,31 +31,31 @@ namespace Android_Ispit.Views.Pages
 
         private async void OnAddClicked(object? sender, EventArgs e)
         {
-            var editPage = _services.GetRequiredService<UserEditPage>();
+            var editPage = _services.GetRequiredService<CategoryEditPage>();
             editPage.PrepareForCreate();
             await Navigation.PushAsync(editPage);
         }
 
         private async void OnEditClicked(object? sender, EventArgs e)
         {
-            if ((sender as Element)?.BindingContext is not UserDTO user)
+            if ((sender as Element)?.BindingContext is not CategoryDTO category)
                 return;
 
-            var editPage = _services.GetRequiredService<UserEditPage>();
-            editPage.PrepareForEdit(user);
+            var editPage = _services.GetRequiredService<CategoryEditPage>();
+            editPage.PrepareForEdit(category);
             await Navigation.PushAsync(editPage);
         }
 
         private async void OnDeleteClicked(object? sender, EventArgs e)
         {
-            if ((sender as Element)?.BindingContext is not UserDTO user)
+            if ((sender as Element)?.BindingContext is not CategoryDTO category)
                 return;
 
-            bool confirmed = await DisplayAlertAsync("Delete User", $"Are you sure you want to delete \"{user.Name}\"?", "Yes", "No");
+            bool confirmed = await DisplayAlertAsync("Delete Category", $"Are you sure you want to delete \"{category.Name}\"?", "Yes", "No");
             if (!confirmed)
                 return;
 
-            await _viewModel.DeleteUserCommand.ExecuteAsync(user);
+            await _viewModel.DeleteCategoryCommand.ExecuteAsync(category);
         }
 
         private void OnLogoutTapped(object? sender, TappedEventArgs e)

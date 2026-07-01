@@ -2,81 +2,217 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Android_Ispit.Views.Pages.ProductDetailsPage"
-             Title="Product Details">
+             x:Name="RootPage"
+             NavigationPage.HasNavigationBar="False"
+             Title="Details">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="16,16,16,60" Spacing="10">
+    <Grid RowDefinitions="Auto,*,Auto">
 
-            <Image Source="{Binding Product.MainImage}"
-                   Aspect="AspectFill"
-                   HeightRequest="240"
-                   HorizontalOptions="Fill" />
-
-            <Label Text="{Binding Product.Title}" FontSize="22" FontAttributes="Bold" />
-            <Label Text="{Binding Product.CategoryName}" FontSize="13" TextColor="Gray" />
-            <Label Text="{Binding Product.PriceDisplay}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-
-            <Label Text="Description" FontAttributes="Bold" Margin="0,10,0,0" />
-            <Label Text="{Binding Product.Description}" />
-
-            <Label Text="Quantity" FontAttributes="Bold" Margin="0,10,0,0" />
-            <Grid ColumnDefinitions="Auto,*,Auto">
-                <Button Grid.Column="0"
-                        Text="-"
-                        Command="{Binding DecrementQuantityCommand}"
-                        IsEnabled="{Binding CanDecrementQuantity}"
-                        WidthRequest="48" />
-                <Label Grid.Column="1"
-                       Text="{Binding Quantity}"
-                       FontSize="18"
-                       FontAttributes="Bold"
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="16,16,16,4">
+            <Frame Grid.Column="0"
+                   WidthRequest="40"
+                   HeightRequest="40"
+                   Padding="0"
+                   CornerRadius="12"
+                   BackgroundColor="{StaticResource SurfaceCard}"
+                   BorderColor="Transparent"
+                   HorizontalOptions="Start">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackTapped" />
+                </Frame.GestureRecognizers>
+                <Label Text="&#8249;"
+                       FontSize="22"
+                       TextColor="{StaticResource Ink}"
                        HorizontalOptions="Center"
                        VerticalOptions="Center" />
-                <Button Grid.Column="2"
-                        Text="+"
-                        Command="{Binding IncrementQuantityCommand}"
-                        IsEnabled="{Binding CanIncrementQuantity}"
-                        WidthRequest="48" />
-            </Grid>
-
-            <Button Text="Add to Cart"
-                    Command="{Binding AddToCartCommand}"
-                    Margin="0,16,0,0" />
-            <Label Text="{Binding CartMessage}"
-                   IsVisible="{Binding HasCartMessage}"
-                   TextColor="Green"
-                   HorizontalOptions="Center" />
-
-            <Label Text="Related Products"
+            </Frame>
+            <Label Grid.Column="1"
+                   Text="Details"
+                   FontFamily="SpaceGrotesk"
                    FontAttributes="Bold"
                    FontSize="16"
-                   Margin="0,20,0,0"
-                   IsVisible="{Binding HasRelatedProducts}" />
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Grid>
 
-            <CollectionView ItemsSource="{Binding RelatedProducts}"
-                             IsVisible="{Binding HasRelatedProducts}"
-                             HeightRequest="140">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame Padding="8" WidthRequest="120" CornerRadius="10" HasShadow="True">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnRelatedProductTapped" />
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Spacing="4">
-                                <Image Source="{Binding MainImage}" Aspect="AspectFill" HeightRequest="70" />
-                                <Label Text="{Binding Title}" FontSize="12" LineBreakMode="TailTruncation" />
-                                <Label Text="{Binding PriceDisplay}" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
-                            </VerticalStackLayout>
-                        </Frame>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,10,16,20" Spacing="10">
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+                <Frame Padding="0" CornerRadius="18" HeightRequest="300">
+                    <Grid>
+                        <Image Source="{Binding CurrentImageUrl}" Aspect="AspectFill" />
+
+                        <Grid ColumnDefinitions="*,*">
+                            <BoxView Grid.Column="0" Color="Transparent">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PreviousImageCommand}" />
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+                            <BoxView Grid.Column="1" Color="Transparent">
+                                <BoxView.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NextImageCommand}" />
+                                </BoxView.GestureRecognizers>
+                            </BoxView>
+                        </Grid>
+
+                        <HorizontalStackLayout BindableLayout.ItemsSource="{Binding CarouselImages}"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="End"
+                                                Margin="0,0,0,14"
+                                                Spacing="8"
+                                                InputTransparent="False">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="0"
+                                           WidthRequest="8"
+                                           HeightRequest="8"
+                                           CornerRadius="4"
+                                           BorderColor="Transparent"
+                                           BackgroundColor="{StaticResource AccentSoft}">
+                                        <Frame.Triggers>
+                                            <DataTrigger TargetType="Frame" Binding="{Binding IsActive}" Value="True">
+                                                <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                            </DataTrigger>
+                                        </Frame.Triggers>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.SelectImageCommand, Source={x:Reference RootPage}}"
+                                                                   CommandParameter="{Binding Index}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame Padding="10,4"
+                       CornerRadius="12"
+                       BackgroundColor="{StaticResource AccentSoft}"
+                       BorderColor="Transparent"
+                       HorizontalOptions="Start"
+                       Margin="0,6,0,0">
+                    <Label Text="{Binding Product.CategoryNameUpper}"
+                           TextColor="{StaticResource Primary}"
+                           FontAttributes="Bold"
+                           FontSize="11" />
+                </Frame>
+
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Grid.Column="0"
+                           Text="{Binding Product.Title}"
+                           FontFamily="SpaceGrotesk"
+                           FontAttributes="Bold"
+                           FontSize="22"
+                           LineBreakMode="WordWrap" />
+                    <Label Grid.Column="1"
+                           Text="{Binding Product.PriceDisplay}"
+                           FontFamily="SpaceGrotesk"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           TextColor="{StaticResource Primary}"
+                           VerticalOptions="Start" />
+                </Grid>
+
+                <Label Text="{Binding Product.Description}"
+                       TextColor="{StaticResource InkMuted}"
+                       Margin="0,4,0,0" />
+
+                <Label Text="Related products"
+                       FontAttributes="Bold"
+                       FontSize="16"
+                       Margin="0,16,0,0"
+                       IsVisible="{Binding HasRelatedProducts}" />
+
+                <CollectionView ItemsSource="{Binding RelatedProducts}"
+                                 IsVisible="{Binding HasRelatedProducts}"
+                                 HeightRequest="150">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="8" WidthRequest="120">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnRelatedProductTapped" />
+                                </Frame.GestureRecognizers>
+                                <VerticalStackLayout Spacing="4">
+                                    <Image Source="{Binding MainImage}" Aspect="AspectFill" HeightRequest="80" />
+                                    <Label Text="{Binding Title}" FontSize="12" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                                    <Label Text="{Binding PriceDisplay}" FontFamily="SpaceGrotesk" FontSize="12" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="2"
+                              BackgroundColor="{StaticResource Surface}"
+                              Padding="16,10,16,16"
+                              Spacing="8">
+
+            <Label Text="{Binding CartMessage}"
+                   IsVisible="{Binding HasCartMessage}"
+                   TextColor="{StaticResource SuccessColor}"
+                   FontSize="12"
+                   HorizontalOptions="Center" />
+
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                <Frame Grid.Column="0"
+                       Padding="4"
+                       CornerRadius="24"
+                       BackgroundColor="{StaticResource SurfaceInput}"
+                       BorderColor="Transparent"
+                       VerticalOptions="Center">
+                    <Grid ColumnDefinitions="Auto,Auto,Auto" ColumnSpacing="8">
+                        <Button Grid.Column="0"
+                                Text="-"
+                                Command="{Binding DecrementQuantityCommand}"
+                                IsEnabled="{Binding CanDecrementQuantity}"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                MinimumWidthRequest="0"
+                                MinimumHeightRequest="0"
+                                CornerRadius="20"
+                                Padding="0"
+                                FontSize="18"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Ink}" />
+                        <Label Grid.Column="1"
+                               Text="{Binding Quantity}"
+                               FontAttributes="Bold"
+                               FontSize="16"
+                               WidthRequest="20"
+                               HorizontalTextAlignment="Center"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="2"
+                                Text="+"
+                                Command="{Binding IncrementQuantityCommand}"
+                                IsEnabled="{Binding CanIncrementQuantity}"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                MinimumWidthRequest="0"
+                                MinimumHeightRequest="0"
+                                CornerRadius="20"
+                                Padding="0"
+                                FontSize="18"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource Ink}" />
+                    </Grid>
+                </Frame>
+
+                <Button Grid.Column="1"
+                        Text="Add to Cart"
+                        FontFamily="SpaceGrotesk"
+                        FontAttributes="Bold"
+                        Command="{Binding AddToCartCommand}" />
+            </Grid>
 
         </VerticalStackLayout>
-    </ScrollView>
+
+    </Grid>
 </ContentPage>

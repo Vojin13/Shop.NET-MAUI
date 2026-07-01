@@ -26,7 +26,7 @@ namespace Android_Ispit.Views.Pages
             await _viewModel.RefreshCartCountAsync();
         }
 
-        private async void OnCartClicked(object? sender, EventArgs e)
+        private async void OnCartTapped(object? sender, TappedEventArgs e)
         {
             var cartPage = _services.GetRequiredService<CartPage>();
             await Navigation.PushAsync(cartPage);
@@ -71,12 +71,12 @@ namespace Android_Ispit.Views.Pages
             await Navigation.PushAsync(detailsPage);
         }
 
-        private void OnLogoutClicked(object? sender, EventArgs e)
+        private void OnLogoutTapped(object? sender, TappedEventArgs e)
         {
             SecureStorage.Default.Remove("user");
             CartStorage.ClearCart();
             if (Application.Current != null)
-                Application.Current.Windows[0].Page = _services.GetRequiredService<AuthTabbedPage>();
+                Application.Current.Windows[0].Page = _services.GetRequiredService<AuthPage>();
         }
     }
 }

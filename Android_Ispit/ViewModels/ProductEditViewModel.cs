@@ -89,10 +89,15 @@ namespace Android_Ispit.ViewModels
             TitleError == "" && PriceError == "" && DescriptionError == "" &&
             ImagesError == "" && CategoryError == "";
 
+        // The Editor's line breaks aren't reliably "\n" across platforms - on Windows Machine it's
+        // been observed to report bare "\r" with no "\n" at all, which a Split('\n') silently
+        // fails to split on. Splitting on all three line-ending styles handles this everywhere.
+        private static readonly string[] LineBreakSeparators = { "\r\n", "\r", "\n" };
+
         private List<string> ParseImages()
         {
             return ImagesText
-                .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+                .Split(LineBreakSeparators, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
                 .Where(url => !string.IsNullOrWhiteSpace(url))
                 .ToList();
         }

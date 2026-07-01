@@ -47,7 +47,6 @@ namespace Android_Ispit.ViewModels
         private bool _canGoPrevious;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(CartButtonText))]
         private int _cartItemCount;
 
         public bool HasApiError => !string.IsNullOrEmpty(ApiError);
@@ -55,8 +54,6 @@ namespace Android_Ispit.ViewModels
 
         public bool HasNoResults => !IsBusy && Products.Count == 0;
         partial void OnIsBusyChanged(bool value) => OnPropertyChanged(nameof(HasNoResults));
-
-        public string CartButtonText => $"Cart ({CartItemCount})";
 
         public async Task RefreshCartCountAsync()
         {

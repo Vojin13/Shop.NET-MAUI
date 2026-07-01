@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Android_Ispit.Behaviors"
              x:Class="Android_Ispit.Views.Pages.ProductEditPage"
              Title="Product">
 
@@ -8,30 +9,57 @@
         <VerticalStackLayout Padding="20,20,20,60" Spacing="10">
 
             <Label Text="Title" FontAttributes="Bold" />
-            <Entry Text="{Binding Title, Mode=TwoWay}" Placeholder="Product title" />
-            <Label Text="{Binding TitleError}" IsVisible="{Binding HasTitleError}" TextColor="Red" FontSize="12" />
+            <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                <Border.Behaviors>
+                    <behaviors:FocusBorderBehavior />
+                </Border.Behaviors>
+                <Entry Text="{Binding Title, Mode=TwoWay}" Placeholder="Product title" />
+            </Border>
+            <Label Text="{Binding TitleError}" IsVisible="{Binding HasTitleError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
 
             <Label Text="Price" FontAttributes="Bold" />
-            <Entry Text="{Binding PriceText, Mode=TwoWay}" Placeholder="0.00" Keyboard="Numeric" />
-            <Label Text="{Binding PriceError}" IsVisible="{Binding HasPriceError}" TextColor="Red" FontSize="12" />
+            <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                <Border.Behaviors>
+                    <behaviors:FocusBorderBehavior />
+                </Border.Behaviors>
+                <Entry Text="{Binding PriceText, Mode=TwoWay}" Placeholder="0.00" Keyboard="Numeric" />
+            </Border>
+            <Label Text="{Binding PriceError}" IsVisible="{Binding HasPriceError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
 
             <Label Text="Category" FontAttributes="Bold" />
-            <Picker ItemsSource="{Binding Categories}"
-                    ItemDisplayBinding="{Binding Name}"
-                    SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" />
-            <Label Text="{Binding CategoryError}" IsVisible="{Binding HasCategoryError}" TextColor="Red" FontSize="12" />
+            <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                <Border.Behaviors>
+                    <behaviors:FocusBorderBehavior />
+                </Border.Behaviors>
+                <Picker ItemsSource="{Binding Categories}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}" />
+            </Border>
+            <Label Text="{Binding CategoryError}" IsVisible="{Binding HasCategoryError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
 
             <Label Text="Description" FontAttributes="Bold" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" HeightRequest="100" AutoSize="TextChanges" />
-            <Label Text="{Binding DescriptionError}" IsVisible="{Binding HasDescriptionError}" TextColor="Red" FontSize="12" />
+            <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                <Border.Behaviors>
+                    <behaviors:FocusBorderBehavior />
+                </Border.Behaviors>
+                <Editor Text="{Binding Description, Mode=TwoWay}" HeightRequest="100" AutoSize="TextChanges" />
+            </Border>
+            <Label Text="{Binding DescriptionError}" IsVisible="{Binding HasDescriptionError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
 
             <Label Text="Images (one URL per line)" FontAttributes="Bold" />
-            <Editor Text="{Binding ImagesText, Mode=TwoWay}" HeightRequest="90" AutoSize="TextChanges" />
-            <Label Text="{Binding ImagesError}" IsVisible="{Binding HasImagesError}" TextColor="Red" FontSize="12" />
+            <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                <Border.Behaviors>
+                    <behaviors:FocusBorderBehavior />
+                </Border.Behaviors>
+                <Editor Text="{Binding ImagesText, Mode=TwoWay}" HeightRequest="90" AutoSize="TextChanges" />
+            </Border>
+            <Label Text="{Binding ImagesError}" IsVisible="{Binding HasImagesError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
 
-            <Label Text="{Binding ApiError}" IsVisible="{Binding HasApiError}" TextColor="Red" Margin="0,8,0,0" />
+            <Label Text="{Binding ApiError}" IsVisible="{Binding HasApiError}" TextColor="{StaticResource ErrorColor}" Margin="0,8,0,0" />
 
             <Button Text="Save"
+                    FontFamily="SpaceGrotesk"
+                    FontAttributes="Bold"
                     Clicked="OnSaveClicked"
                     IsEnabled="{Binding IsFormValid}"
                     Margin="0,16,0,0" />

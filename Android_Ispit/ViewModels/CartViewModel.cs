@@ -13,6 +13,7 @@ namespace Android_Ispit.ViewModels
         [NotifyPropertyChangedFor(nameof(ShowEmptyMessage))]
         [NotifyPropertyChangedFor(nameof(Total))]
         [NotifyPropertyChangedFor(nameof(TotalDisplay))]
+        [NotifyPropertyChangedFor(nameof(ItemCountText))]
         private ObservableCollection<CartItemDTO> _items = new();
 
         [ObservableProperty]
@@ -26,6 +27,7 @@ namespace Android_Ispit.ViewModels
 
         public decimal Total => Items.Sum(i => i.Price * i.Quantity);
         public string TotalDisplay => $"${Total:0.##}";
+        public string ItemCountText => $"{Items.Count} item{(Items.Count == 1 ? "" : "s")}";
 
         public async Task LoadCartAsync()
         {
@@ -75,6 +77,7 @@ namespace Android_Ispit.ViewModels
             OnPropertyChanged(nameof(ShowEmptyMessage));
             OnPropertyChanged(nameof(Total));
             OnPropertyChanged(nameof(TotalDisplay));
+            OnPropertyChanged(nameof(ItemCountText));
             await CartStorage.SaveCartAsync(Items.ToList());
         }
 

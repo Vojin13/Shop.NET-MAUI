@@ -8,22 +8,38 @@
         <ScrollView x:Name="ContentScrollView">
             <VerticalStackLayout Padding="16,16,16,60" Spacing="10">
 
-                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                    <Label Grid.Column="0"
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="10">
+                    <Image Grid.Column="0"
+                           Source="linea_icon.png"
+                           WidthRequest="28"
+                           HeightRequest="28"
+                           Aspect="AspectFit" />
+                    <Label Grid.Column="1"
                            Text="Shop"
-                           FontSize="24"
+                           FontFamily="SpaceGrotesk"
+                           FontSize="28"
                            FontAttributes="Bold"
                            VerticalOptions="Center" />
-                    <Button Grid.Column="1"
-                            Text="{Binding CartButtonText}"
-                            Clicked="OnCartClicked"
-                            FontSize="13"
-                            Padding="12,6" />
-                    <Button Grid.Column="2"
-                            Text="Logout"
-                            Clicked="OnLogoutClicked"
-                            FontSize="13"
-                            Padding="12,6" />
+                    <Grid Grid.Column="2" WidthRequest="32" HeightRequest="32">
+                        <Image Source="linea_cart_badge_empty_200.png" Aspect="AspectFit" />
+                        <Label Text="{Binding CartItemCount}"
+                               FontAttributes="Bold" FontSize="9" TextColor="#22140D"
+                               HorizontalOptions="Center" VerticalOptions="Center"
+                               HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                               TranslationX="8" TranslationY="-8" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCartTapped" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                    <Label Grid.Column="3"
+                           Text="Log out"
+                           TextColor="{StaticResource Primary}"
+                           FontSize="14"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
                 </Grid>
 
                 <SearchBar Placeholder="Search products..."
@@ -38,38 +54,42 @@
 
                 <Label Text="{Binding ApiError}"
                        IsVisible="{Binding HasApiError}"
-                       TextColor="Red" />
+                       TextColor="{StaticResource ErrorColor}" />
 
                 <Label Text="No products found."
                        IsVisible="{Binding HasNoResults}"
-                       TextColor="Gray"
+                       TextColor="{StaticResource InkMuted}"
                        HorizontalOptions="Center"
                        Margin="0,20,0,0" />
 
                 <VerticalStackLayout BindableLayout.ItemsSource="{Binding Products}" Spacing="10">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <Frame Padding="10" CornerRadius="12" HasShadow="True">
+                            <Frame Padding="12">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="OnProductTapped" />
                                 </Frame.GestureRecognizers>
-                                <Grid ColumnDefinitions="90,*" ColumnSpacing="12">
+                                <Grid ColumnDefinitions="70,*,Auto" ColumnSpacing="12">
                                     <Image Grid.Column="0"
                                            Source="{Binding MainImage}"
                                            Aspect="AspectFill"
-                                           HeightRequest="90"
-                                           WidthRequest="90" />
+                                           HeightRequest="70"
+                                           WidthRequest="70" />
                                     <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
                                         <Label Text="{Binding Title}"
+                                               FontFamily="SpaceGrotesk"
                                                FontAttributes="Bold"
-                                               FontSize="16"
+                                               FontSize="15"
                                                LineBreakMode="TailTruncation" />
-                                        <Label Text="{Binding CategoryName}" FontSize="12" TextColor="Gray" />
-                                        <Label Text="{Binding PriceDisplay}"
-                                               FontSize="16"
-                                               FontAttributes="Bold"
-                                               TextColor="{StaticResource Primary}" />
+                                        <Label Text="{Binding CategoryName}" FontSize="12" TextColor="{StaticResource InkMuted}" />
                                     </VerticalStackLayout>
+                                    <Label Grid.Column="2"
+                                           Text="{Binding PriceDisplay}"
+                                           FontFamily="SpaceGrotesk"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource Ink}"
+                                           VerticalOptions="Center" />
                                 </Grid>
                             </Frame>
                         </DataTemplate>

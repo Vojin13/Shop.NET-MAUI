@@ -13,5 +13,6 @@ namespace Android_Ispit.DTO
         public string MainImage => Images.Count > 0 ? Images[0] : "https://picsum.photos/seed/" + Id + "/400/300";
         public string PriceDisplay => $"${Price:0.##}";
         public string CategoryName => Category?.Name ?? "";
+        public string CategoryNameUpper => CategoryName.ToUpperInvariant();
     }
 }

@@ -16,6 +16,8 @@ namespace Android_Ispit
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("SpaceGrotesk.ttf", "SpaceGrotesk");
+                    fonts.AddFont("HankenGrotesk.ttf", "HankenGrotesk");
                 });
 
 #if DEBUG
@@ -32,10 +34,11 @@ namespace Android_Ispit
             builder.Services.AddTransient<UsersViewModel>();
             builder.Services.AddTransient<UserEditViewModel>();
             builder.Services.AddTransient<CartViewModel>();
+            builder.Services.AddTransient<CategoriesViewModel>();
+            builder.Services.AddTransient<CategoryEditViewModel>();
 
             // Pages
-            builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<RegisterPage>();
+            builder.Services.AddTransient<AuthPage>();
             builder.Services.AddTransient<ShopPage>();
             builder.Services.AddTransient<ProductDetailsPage>();
             builder.Services.AddTransient<DashboardPage>();
@@ -43,9 +46,10 @@ namespace Android_Ispit
             builder.Services.AddTransient<UsersPage>();
             builder.Services.AddTransient<UserEditPage>();
             builder.Services.AddTransient<CartPage>();
+            builder.Services.AddTransient<CategoriesPage>();
+            builder.Services.AddTransient<CategoryEditPage>();
 
             // Tabbed root pages
-            builder.Services.AddTransient<AuthTabbedPage>();
             builder.Services.AddTransient<CustomerTabbedPage>();
             builder.Services.AddTransient<AdminTabbedPage>();
 

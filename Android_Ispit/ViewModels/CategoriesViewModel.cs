@@ -6,22 +6,25 @@ using Android_Ispit.DTO;
 
 namespace Android_Ispit.ViewModels
 {
-    public partial class UsersViewModel : ObservableObject
+    public partial class CategoriesViewModel : ObservableObject
     {
-        // The API has no name/email-search query param for users, so search is done locally
+        // The API has no name-search query param for categories, so search is done locally
         // over this full list instead of round-tripping to the server per keystroke/submit.
-        private List<UserDTO> _allUsers = new();
+        private List<CategoryDTO> _allCategories = new();
 
         [ObservableProperty]
         private string _searchText = string.Empty;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(ItemCountText))]
         [NotifyPropertyChangedFor(nameof(HasNoResults))]
-        private ObservableCollection<UserDTO> _users = new();
+        [NotifyPropertyChangedFor(nameof(ItemCountText))]
+        private ObservableCollection<CategoryDTO> _categories = new();
 
         [ObservableProperty]
         private bool _isBusy;
+
+        [ObservableProperty]
+        private bool _isRefreshing;
 
         [ObservableProperty]
         private string _apiError = string.Empty;
@@ -29,26 +32,27 @@ namespace Android_Ispit.ViewModels
         public bool HasApiError => !string.IsNullOrEmpty(ApiError);
         partial void OnApiErrorChanged(string value) => OnPropertyChanged(nameof(HasApiError));
 
-        public bool HasNoResults => !IsBusy && Users.Count == 0;
+        public bool HasNoResults => !IsBusy && Categories.Count == 0;
         partial void OnIsBusyChanged(bool value) => OnPropertyChanged(nameof(HasNoResults));
 
-        public string ItemCountText => $"{Users.Count} user{(Users.Count == 1 ? "" : "s")}";
+        public string ItemCountText => $"{Categories.Count} categor{(Categories.Count == 1 ? "y" : "ies")}";
 
         [RelayCommand]
-        public async Task LoadUsersAsync()
+        public async Task LoadCategoriesAsync()
         {
             IsBusy = true;
+            IsRefreshing = true;
             ApiError = string.Empty;
             try
             {
                 RestClient client = new RestClient("http://localhost:3001/api/v1");
-                RestRequest request = new RestRequest("/users", Method.Get);
+                RestRequest request = new RestRequest("/categories", Method.Get);
                 request.AddParameter("limit", 100);
 
-                var result = await client.ExecuteAsync<List<UserDTO>>(request);
+                var result = await client.ExecuteAsync<List<CategoryDTO>>(request);
                 if (result.IsSuccessful && result.Data != null)
                 {
-                    _allUsers = result.Data.OrderBy(u => u.Id).ToList();
+                    _allCategories = result.Data;
                     ApplyFilter();
                 }
                 else
@@ -59,6 +63,7 @@ namespace Android_Ispit.ViewModels
             finally
             {
                 IsBusy = false;
+                IsRefreshing = false;
             }
         }
 
@@ -71,27 +76,25 @@ namespace Android_Ispit.ViewModels
         private void ApplyFilter()
         {
             var filtered = string.IsNullOrWhiteSpace(SearchText)
-                ? _allUsers
-                : _allUsers.Where(u =>
-                    u.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
-                    u.Email.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
+                ? _allCategories
+                : _allCategories.Where(c => c.Name.Contains(SearchText, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            Users = new ObservableCollection<UserDTO>(filtered);
+            Categories = new ObservableCollection<CategoryDTO>(filtered);
         }
 
         [RelayCommand]
-        private async Task DeleteUserAsync(UserDTO user)
+        private async Task DeleteCategoryAsync(CategoryDTO category)
         {
-            if (user == null)
+            if (category == null)
                 return;
 
             RestClient client = new RestClient("http://localhost:3001/api/v1");
-            RestRequest request = new RestRequest($"/users/{user.Id}", Method.Delete);
+            RestRequest request = new RestRequest($"/categories/{category.Id}", Method.Delete);
             var result = await client.ExecuteAsync(request);
 
             if (result.IsSuccessful)
             {
-                _allUsers.Remove(user);
+                _allCategories.Remove(category);
                 ApplyFilter();
             }
             else

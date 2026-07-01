@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Android_Ispit.Behaviors"
+             x:Class="Android_Ispit.Views.Pages.AuthPage"
+             Title="Linea">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,32,24,60" Spacing="4">
+
+            <HorizontalStackLayout Spacing="10" Margin="0,0,0,10">
+                <Image Source="linea_icon.png"
+                       WidthRequest="40"
+                       HeightRequest="40"
+                       Aspect="AspectFit" />
+                <Label Text="Linea" FontFamily="SpaceGrotesk" FontSize="20" FontAttributes="Bold" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label x:Name="HeadlineLabel"
+                   Text="Welcome back"
+                   FontFamily="SpaceGrotesk"
+                   FontSize="28"
+                   FontAttributes="Bold"
+                   Margin="0,10,0,0" />
+            <Label x:Name="SubtitleLabel"
+                   Text="Log in to keep shopping."
+                   TextColor="{StaticResource InkMuted}"
+                   Margin="0,0,0,10" />
+
+            <Frame Padding="4"
+                   CornerRadius="24"
+                   BackgroundColor="{StaticResource SurfaceInput}"
+                   BorderColor="Transparent"
+                   Margin="0,0,0,16">
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
+                    <Button x:Name="LoginTabButton"
+                            Grid.Column="0"
+                            Text="Log In"
+                            Clicked="OnLoginTabClicked"
+                            CornerRadius="20"
+                            Padding="0"
+                            HeightRequest="40"
+                            MinimumHeightRequest="0" />
+                    <Button x:Name="RegisterTabButton"
+                            Grid.Column="1"
+                            Text="Register"
+                            Clicked="OnRegisterTabClicked"
+                            CornerRadius="20"
+                            Padding="0"
+                            HeightRequest="40"
+                            MinimumHeightRequest="0" />
+                </Grid>
+            </Frame>
+
+            <!-- Login -->
+            <VerticalStackLayout x:Name="LoginSection" Spacing="8">
+
+                <Frame IsVisible="{Binding HasApiError}"
+                       BackgroundColor="{StaticResource ErrorSurface}"
+                       BorderColor="Transparent"
+                       Padding="14,10"
+                       Margin="0,4,0,4">
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame WidthRequest="8" HeightRequest="8" Padding="0" CornerRadius="4"
+                               BackgroundColor="{StaticResource ErrorColor}" BorderColor="Transparent"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding ApiError}" TextColor="{StaticResource ErrorColor}" FontSize="13" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Label Text="Email" FontAttributes="Bold" FontSize="13" />
+                <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                    <Border.Behaviors>
+                        <behaviors:FocusBorderBehavior />
+                    </Border.Behaviors>
+                    <Entry Text="{Binding Email, Mode=TwoWay}" Placeholder="you@email.com" Keyboard="Email" Completed="OnLoginEntryCompleted" />
+                </Border>
+                <Label Text="{Binding EmailError}" IsVisible="{Binding HasEmailError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
+
+                <Label Text="Password" FontAttributes="Bold" FontSize="13" Margin="0,6,0,0" />
+                <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                    <Border.Behaviors>
+                        <behaviors:FocusBorderBehavior />
+                    </Border.Behaviors>
+                    <Entry Text="{Binding Password, Mode=TwoWay}" IsPassword="True" Placeholder="Password" Completed="OnLoginEntryCompleted" />
+                </Border>
+                <Label Text="{Binding PasswordError}" IsVisible="{Binding HasPasswordError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
+
+                <Button Text="Log In" FontFamily="SpaceGrotesk" FontAttributes="Bold" Command="{Binding LoginCommand}" IsEnabled="{Binding IsFormValid}" Margin="0,12,0,0" />
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+                <Frame BackgroundColor="{StaticResource SurfaceCard}" BorderColor="Transparent" Padding="16,12" Margin="0,20,0,0">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="TEST ACCOUNTS" FontSize="11" FontAttributes="Bold" TextColor="{StaticResource Primary}" />
+                        <Label Text="john@mail.com · changeme (customer)" FontSize="12" TextColor="{StaticResource InkMuted}" />
+                        <Label Text="admin@mail.com · admin123 (admin)" FontSize="12" TextColor="{StaticResource InkMuted}" />
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+
+            <!-- Register -->
+            <VerticalStackLayout x:Name="RegisterSection" Spacing="8" IsVisible="False">
+
+                <Frame IsVisible="{Binding HasSuccessMessage}"
+                       BackgroundColor="{StaticResource SuccessSurface}"
+                       BorderColor="Transparent"
+                       Padding="14,10"
+                       Margin="0,4,0,4">
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame WidthRequest="8" HeightRequest="8" Padding="0" CornerRadius="4"
+                               BackgroundColor="{StaticResource SuccessColor}" BorderColor="Transparent"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding SuccessMessage}" TextColor="{StaticResource SuccessColor}" FontSize="13" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame IsVisible="{Binding HasApiError}"
+                       BackgroundColor="{StaticResource ErrorSurface}"
+                       BorderColor="Transparent"
+                       Padding="14,10"
+                       Margin="0,4,0,4">
+                    <HorizontalStackLayout Spacing="10">
+                        <Frame WidthRequest="8" HeightRequest="8" Padding="0" CornerRadius="4"
+                               BackgroundColor="{StaticResource ErrorColor}" BorderColor="Transparent"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding ApiError}" TextColor="{StaticResource ErrorColor}" FontSize="13" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Label Text="Name" FontAttributes="Bold" FontSize="13" />
+                <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                    <Border.Behaviors>
+                        <behaviors:FocusBorderBehavior />
+                    </Border.Behaviors>
+                    <Entry Text="{Binding Name, Mode=TwoWay}" Placeholder="Full name" Completed="OnRegisterEntryCompleted" />
+                </Border>
+                <Label Text="{Binding NameError}" IsVisible="{Binding HasNameError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
+
+                <Label Text="Email" FontAttributes="Bold" FontSize="13" Margin="0,6,0,0" />
+                <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                    <Border.Behaviors>
+                        <behaviors:FocusBorderBehavior />
+                    </Border.Behaviors>
+                    <Entry Text="{Binding Email, Mode=TwoWay}" Placeholder="you@email.com" Keyboard="Email" Completed="OnRegisterEntryCompleted" />
+                </Border>
+                <Label Text="{Binding EmailError}" IsVisible="{Binding HasEmailError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
+
+                <Label Text="Password" FontAttributes="Bold" FontSize="13" Margin="0,6,0,0" />
+                <Border Stroke="{StaticResource AccentSoft}" StrokeThickness="1.5" StrokeShape="RoundRectangle 10" Padding="0">
+                    <Border.Behaviors>
+                        <behaviors:FocusBorderBehavior />
+                    </Border.Behaviors>
+                    <Entry Text="{Binding Password, Mode=TwoWay}" IsPassword="True" Placeholder="Password" Completed="OnRegisterEntryCompleted" />
+                </Border>
+                <Label Text="{Binding PasswordError}" IsVisible="{Binding HasPasswordError}" TextColor="{StaticResource ErrorColor}" FontSize="12" />
+
+                <Button Text="Create account" FontFamily="SpaceGrotesk" FontAttributes="Bold" Command="{Binding RegisterCommand}" IsEnabled="{Binding IsFormValid}" Margin="0,12,0,0" />
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout x:Name="FooterLink" HorizontalOptions="Center" Margin="0,20,0,0" Spacing="4" IsVisible="False">
+                <Label Text="Already have an account?" TextColor="{StaticResource InkMuted}" FontSize="13" VerticalOptions="Center" />
+                <Label Text="Log in" TextColor="{StaticResource Primary}" FontAttributes="Bold" FontSize="13" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnLoginTabClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Android_Ispit.Views.Pages.UsersPage"
+             x:Class="Android_Ispit.Views.Pages.CategoriesPage"
              NavigationPage.HasNavigationBar="False"
-             Title="Users">
+             Title="Categories">
 
-    <RefreshView IsRefreshing="{Binding IsBusy}" Command="{Binding LoadUsersCommand}">
+    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadCategoriesCommand}">
         <ScrollView>
             <VerticalStackLayout Padding="16,16,16,60" Spacing="10">
 
@@ -16,7 +16,7 @@
                            HeightRequest="28"
                            Aspect="AspectFit" />
                     <VerticalStackLayout Grid.Column="1" Spacing="0">
-                        <Label Text="Users" FontFamily="SpaceGrotesk" FontSize="28" FontAttributes="Bold" />
+                        <Label Text="Categories" FontFamily="SpaceGrotesk" FontSize="28" FontAttributes="Bold" />
                         <Label Text="{Binding ItemCountText}" FontSize="13" TextColor="{StaticResource InkMuted}" />
                     </VerticalStackLayout>
                     <Label Grid.Column="2"
@@ -30,13 +30,13 @@
                     </Label>
                 </Grid>
 
-                <Button Text="+ Add User"
+                <Button Text="+ Add Category"
                         FontFamily="SpaceGrotesk"
                         FontAttributes="Bold"
                         Clicked="OnAddClicked"
                         Margin="0,6,0,0" />
 
-                <SearchBar Placeholder="Search users..."
+                <SearchBar Placeholder="Search categories..."
                            Text="{Binding SearchText, Mode=TwoWay}"
                            SearchButtonPressed="OnSearchButtonPressed" />
 
@@ -45,20 +45,20 @@
                        TextColor="{StaticResource ErrorColor}"
                        Margin="0,0,0,10" />
 
-                <Label Text="No users found."
+                <Label Text="No categories found."
                        IsVisible="{Binding HasNoResults}"
                        TextColor="{StaticResource InkMuted}"
                        HorizontalOptions="Center"
                        Margin="0,20,0,0" />
 
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Users}" Spacing="10">
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Categories}" Spacing="10">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Frame Padding="14">
                                 <VerticalStackLayout Spacing="10">
-                                    <Grid ColumnDefinitions="60,*,Auto" ColumnSpacing="12">
+                                    <Grid ColumnDefinitions="60,*" ColumnSpacing="12">
                                         <Image Grid.Column="0"
-                                               Source="{Binding Avatar}"
+                                               Source="{Binding Image}"
                                                Aspect="AspectFill"
                                                HeightRequest="60"
                                                WidthRequest="60" />
@@ -68,14 +68,8 @@
                                                    FontAttributes="Bold"
                                                    FontSize="15"
                                                    LineBreakMode="TailTruncation" />
-                                            <Label Text="{Binding Email}" FontSize="12" TextColor="{StaticResource InkMuted}" />
+                                            <Label Text="{Binding Slug}" FontSize="12" TextColor="{StaticResource InkMuted}" />
                                         </VerticalStackLayout>
-                                        <Label Grid.Column="2"
-                                               Text="{Binding Role}"
-                                               FontAttributes="Bold"
-                                               FontSize="13"
-                                               TextColor="{StaticResource Primary}"
-                                               VerticalOptions="Center" />
                                     </Grid>
 
                                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource AccentSoft}" />

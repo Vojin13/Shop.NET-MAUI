@@ -1,16 +1,28 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<ResourceDictionary 
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <!-- Nimbus dark palette: warm charcoal surfaces, coral-terracotta accent, cream ink -->
+    <Color x:Key="Primary">#D97757</Color>
+    <Color x:Key="AccentSoft">#33261F</Color>
+    <Color x:Key="Ink">#F2EEE4</Color>
+    <Color x:Key="InkMuted">#9B948A</Color>
+    <Color x:Key="Surface">#201E1B</Color>
+    <Color x:Key="SurfaceCard">#2A2724</Color>
+    <Color x:Key="SurfaceInput">#2E2B27</Color>
+    <Color x:Key="ErrorColor">#E5766B</Color>
+    <Color x:Key="SuccessColor">#6FA085</Color>
+    <Color x:Key="ErrorSurface">#3A2723</Color>
+    <Color x:Key="SuccessSurface">#20302A</Color>
+
+    <Color x:Key="PrimaryDark">#D97757</Color>
+    <Color x:Key="PrimaryDarkText">#201E1B</Color>
+    <Color x:Key="Secondary">#33261F</Color>
+    <Color x:Key="SecondaryDarkText">#F2EEE4</Color>
+    <Color x:Key="Tertiary">#D97757</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>

@@ -22,6 +22,7 @@ namespace Android_Ispit.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasNoResults))]
+        [NotifyPropertyChangedFor(nameof(ItemCountText))]
         private ObservableCollection<ProductDTO> _products = new();
 
         [ObservableProperty]
@@ -50,6 +51,8 @@ namespace Android_Ispit.ViewModels
 
         public bool HasNoResults => !IsBusy && Products.Count == 0;
         partial void OnIsBusyChanged(bool value) => OnPropertyChanged(nameof(HasNoResults));
+
+        public string ItemCountText => $"{Products.Count} item{(Products.Count == 1 ? "" : "s")}";
 
         public async Task LoadCategoriesAsync()
         {
@@ -160,6 +163,8 @@ namespace Android_Ispit.ViewModels
             if (result.IsSuccessful)
             {
                 Products.Remove(product);
+                OnPropertyChanged(nameof(HasNoResults));
+                OnPropertyChanged(nameof(ItemCountText));
             }
             else
             {

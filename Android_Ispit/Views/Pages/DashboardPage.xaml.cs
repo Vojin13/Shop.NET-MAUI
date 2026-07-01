@@ -83,12 +83,12 @@ namespace Android_Ispit.Views.Pages
             await _viewModel.DeleteProductCommand.ExecuteAsync(product);
         }
 
-        private void OnLogoutClicked(object? sender, EventArgs e)
+        private void OnLogoutTapped(object? sender, TappedEventArgs e)
         {
             SecureStorage.Default.Remove("user");
             CartStorage.ClearCart();
             if (Application.Current != null)
-                Application.Current.Windows[0].Page = _services.GetRequiredService<AuthTabbedPage>();
+                Application.Current.Windows[0].Page = _services.GetRequiredService<AuthPage>();
         }
     }
 }

@@ -33,5 +33,10 @@ namespace Android_Ispit.Views.Pages
             await detailsPage.ShowProductAsync(product);
             await Navigation.PushAsync(detailsPage);
         }
+
+        private async void OnBackTapped(object? sender, TappedEventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }
