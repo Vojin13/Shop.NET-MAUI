@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Android_Ispit.Views.Pages.UserEditPage"
+             Title="User">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,20,20,60" Spacing="10">
+
+            <Label Text="Name" FontAttributes="Bold" />
+            <Entry Text="{Binding Name, Mode=TwoWay}" Placeholder="Full name" />
+            <Label Text="{Binding NameError}" IsVisible="{Binding HasNameError}" TextColor="Red" FontSize="12" />
+
+            <Label Text="Email" FontAttributes="Bold" />
+            <Entry Text="{Binding Email, Mode=TwoWay}" Placeholder="user@email.com" Keyboard="Email" />
+            <Label Text="{Binding EmailError}" IsVisible="{Binding HasEmailError}" TextColor="Red" FontSize="12" />
+
+            <Label Text="Password" FontAttributes="Bold" />
+            <Entry Text="{Binding Password, Mode=TwoWay}"
+                   IsPassword="True"
+                   Placeholder="{Binding PasswordPlaceholder}" />
+            <Label Text="{Binding PasswordError}" IsVisible="{Binding HasPasswordError}" TextColor="Red" FontSize="12" />
+
+            <Label Text="Role" FontAttributes="Bold" />
+            <Picker ItemsSource="{Binding Roles}" SelectedItem="{Binding SelectedRole, Mode=TwoWay}" />
+            <Label Text="{Binding RoleError}" IsVisible="{Binding HasRoleError}" TextColor="Red" FontSize="12" />
+
+            <Label Text="{Binding ApiError}" IsVisible="{Binding HasApiError}" TextColor="Red" Margin="0,8,0,0" />
+
+            <Button Text="Save"
+                    Clicked="OnSaveClicked"
+                    IsEnabled="{Binding IsFormValid}"
+                    Margin="0,16,0,0" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

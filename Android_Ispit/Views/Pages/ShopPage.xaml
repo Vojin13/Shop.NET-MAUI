@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Android_Ispit.Views.Pages.ShopPage"
+             Title="Shop">
+
+    <RefreshView IsRefreshing="{Binding IsRefreshing}" Command="{Binding LoadProductsCommand}">
+        <ScrollView x:Name="ContentScrollView">
+            <VerticalStackLayout Padding="16,16,16,60" Spacing="10">
+
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                    <Label Grid.Column="0"
+                           Text="Shop"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="1"
+                            Text="{Binding CartButtonText}"
+                            Clicked="OnCartClicked"
+                            FontSize="13"
+                            Padding="12,6" />
+                    <Button Grid.Column="2"
+                            Text="Logout"
+                            Clicked="OnLogoutClicked"
+                            FontSize="13"
+                            Padding="12,6" />
+                </Grid>
+
+                <SearchBar Placeholder="Search products..."
+                           Text="{Binding SearchText, Mode=TwoWay}"
+                           SearchButtonPressed="OnSearchButtonPressed" />
+
+                <Picker x:Name="CategoryPicker"
+                        ItemsSource="{Binding Categories}"
+                        ItemDisplayBinding="{Binding Name}"
+                        SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
+                        SelectedIndexChanged="OnCategoryChanged" />
+
+                <Label Text="{Binding ApiError}"
+                       IsVisible="{Binding HasApiError}"
+                       TextColor="Red" />
+
+                <Label Text="No products found."
+                       IsVisible="{Binding HasNoResults}"
+                       TextColor="Gray"
+                       HorizontalOptions="Center"
+                       Margin="0,20,0,0" />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Products}" Spacing="10">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="10" CornerRadius="12" HasShadow="True">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnProductTapped" />
+                                </Frame.GestureRecognizers>
+                                <Grid ColumnDefinitions="90,*" ColumnSpacing="12">
+                                    <Image Grid.Column="0"
+                                           Source="{Binding MainImage}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="90"
+                                           WidthRequest="90" />
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                                        <Label Text="{Binding Title}"
+                                               FontAttributes="Bold"
+                                               FontSize="16"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding CategoryName}" FontSize="12" TextColor="Gray" />
+                                        <Label Text="{Binding PriceDisplay}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource Primary}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,10,0,0">
+                    <Button Grid.Column="0"
+                            Text="Previous"
+                            Clicked="OnPreviousClicked"
+                            IsEnabled="{Binding CanGoPrevious}"
+                            FontSize="13"
+                            Padding="12,6" />
+                    <Label Grid.Column="1"
+                           Text="{Binding CurrentPageNumber, StringFormat='Page {0}'}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="2"
+                            Text="Next"
+                            Clicked="OnNextClicked"
+                            IsEnabled="{Binding CanGoNext}"
+                            FontSize="13"
+                            Padding="12,6" />
+                </Grid>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

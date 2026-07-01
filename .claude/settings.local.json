@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet restore *)",
+      "WebSearch",
+      "Bash(gh repo *)",
+      "Bash(git --version)",
+      "Read(//c/Users/user/Desktop/**)",
+      "Read(//c/Users/user/**)",
+      "Bash(find \"/c/Users/user/Desktop/Projects\" -maxdepth 3 -iname \"*fake-store*\" 2>/dev/null)",
+      "Read(//c/Users/user/Downloads/**)",
+      "Read(//c/Users/user/Documents/**)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(where nvm *)",
+      "Bash(where node *)",
+      "Bash(npm view *)",
+      "PowerShell(winget --version 2>&1)",
+      "PowerShell(winget list -q nvm 2>&1)",
+      "Bash(cat controllers/auth.controller.ts)",
+      "Bash(cat services/auth.service.ts)",
+      "Bash(cat strategies/local.strategy.ts)",
+      "Bash(cat strategies/jwt.strategy.ts)",
+      "Bash(cat models/payload.model.ts)",
+      "Bash(cat database/entities/user.entity.ts)",
+      "Bash(cat database/entities/product.entity.ts)",
+      "Bash(cat database/entities/category.entity.ts)",
+      "Bash(cat dtos/product.dto.ts)",
+      "Bash(cat services/products.service.ts)",
+      "Bash(cat controllers/products.controller.ts)",
+      "Bash(cat controllers/users.controller.ts)",
+      "Bash(dotnet build *)",
+      "Bash(curl -s -o /dev/null -w \"http://localhost:3001/ -> %{http_code}\\\\n\" http://localhost:3001/)",
+      "Bash(curl -s -o /dev/null -w \"http://localhost:3001/api/v1/products -> %{http_code}\\\\n\" http://localhost:3001/api/v1/products)",
+      "Bash(curl -s -o /dev/null -w \"http://localhost:3001/products -> %{http_code}\\\\n\" http://localhost:3001/products)",
+      "Bash(curl -s -o /dev/null -w \"http://localhost:3001/docs -> %{http_code}\\\\n\" http://localhost:3001/docs)",
+      "Bash(grep -rn \"10\\\\.0\\\\.2\\\\.2\" \"/c/Users/user/.claude/projects/C--Users-user-Desktop-Projects-Android-Ispit/memory/\" 2>/dev/null)",
+      "Bash(curl -s -X POST http://localhost:3001/api/v1/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"admin@mail.com\",\"password\":\"admin123\"}')"
+    ]
+  }
+}
