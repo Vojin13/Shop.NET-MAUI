@@ -36,6 +36,7 @@ namespace Android_Ispit
             builder.Services.AddTransient<CartViewModel>();
             builder.Services.AddTransient<CategoriesViewModel>();
             builder.Services.AddTransient<CategoryEditViewModel>();
+            builder.Services.AddTransient<ProfileViewModel>();
 
             // Pages
             builder.Services.AddTransient<AuthPage>();
@@ -48,6 +49,7 @@ namespace Android_Ispit
             builder.Services.AddTransient<CartPage>();
             builder.Services.AddTransient<CategoriesPage>();
             builder.Services.AddTransient<CategoryEditPage>();
+            builder.Services.AddTransient<ProfilePage>();
 
             // Tabbed root pages
             builder.Services.AddTransient<CustomerTabbedPage>();

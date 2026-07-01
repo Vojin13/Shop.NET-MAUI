@@ -19,15 +19,18 @@
                         <Label Text="Users" FontFamily="SpaceGrotesk" FontSize="28" FontAttributes="Bold" />
                         <Label Text="{Binding ItemCountText}" FontSize="13" TextColor="{StaticResource InkMuted}" />
                     </VerticalStackLayout>
-                    <Label Grid.Column="2"
-                           Text="Log out"
-                           TextColor="{StaticResource Primary}"
-                           FontSize="14"
-                           VerticalOptions="Start">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnLogoutTapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <VerticalStackLayout Grid.Column="2" Spacing="2" HorizontalOptions="End" VerticalOptions="Start">
+                        <Label Text="My Profile" TextColor="{StaticResource Primary}" FontSize="12" HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProfileTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Log out" TextColor="{StaticResource Primary}" FontSize="12" HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
                 </Grid>
 
                 <Button Text="+ Add User"

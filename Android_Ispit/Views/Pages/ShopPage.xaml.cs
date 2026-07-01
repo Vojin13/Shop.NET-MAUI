@@ -78,5 +78,11 @@ namespace Android_Ispit.Views.Pages
             if (Application.Current != null)
                 Application.Current.Windows[0].Page = _services.GetRequiredService<AuthPage>();
         }
+
+        private async void OnProfileTapped(object? sender, TappedEventArgs e)
+        {
+            var profilePage = _services.GetRequiredService<ProfilePage>();
+            await Navigation.PushAsync(profilePage);
+        }
     }
 }

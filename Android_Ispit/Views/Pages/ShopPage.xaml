@@ -31,15 +31,18 @@
                             <TapGestureRecognizer Tapped="OnCartTapped" />
                         </Grid.GestureRecognizers>
                     </Grid>
-                    <Label Grid.Column="3"
-                           Text="Log out"
-                           TextColor="{StaticResource Primary}"
-                           FontSize="14"
-                           VerticalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnLogoutTapped" />
-                        </Label.GestureRecognizers>
-                    </Label>
+                    <VerticalStackLayout Grid.Column="3" Spacing="2" HorizontalOptions="End" VerticalOptions="Center">
+                        <Label Text="My Profile" TextColor="{StaticResource Primary}" FontSize="12" HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnProfileTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="Log out" TextColor="{StaticResource Primary}" FontSize="12" HorizontalTextAlignment="End">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLogoutTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
                 </Grid>
 
                 <SearchBar Placeholder="Search products..."
