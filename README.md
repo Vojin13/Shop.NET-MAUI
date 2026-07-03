@@ -1,4 +1,4 @@
-# Linea (Android_Ispit)
+# Linea
 
 A .NET MAUI shop app built for an Android exam project. Customers can browse/search products and check out with a local cart; admins manage products, categories, and users.
 
@@ -13,7 +13,7 @@ A .NET MAUI shop app built for an Android exam project. Customers can browse/sea
 
 ## Backend: Platzi Fake Store API
 
-This app talks to the open-source **Platzi Fake Store API** (`fake-store-api` on npm), located in this workspace at `!SaPredavanja/fake-api-backend` (NestJS + TypeORM, in-memory SQLite that re-seeds on every restart).
+This app talks to the open-source **Platzi Fake Store API** (`fake-store-api` on npm) — a NestJS + TypeORM backend with an in-memory SQLite database that re-seeds on every restart. It runs as a separate project alongside this one.
 
 ### ⚠️ Requires Node.js v20.x — do not use a newer Node version
 
@@ -26,7 +26,7 @@ Using a newer Node (e.g. v22/v24) will break `npm install`: the pinned `better-s
 ### Backend setup
 
 1. Install Node.js **20.17.0** (use `nvm-windows` if you also have other Node versions installed; run `nvm use 20.17.0` before the steps below).
-2. In `!SaPredavanja/fake-api-backend`, create a **`.env.local`** file (the exact filename matters — not `.env`) with:
+2. In the backend project's root, create a **`.env.local`** file (the exact filename matters — not `.env`) with:
    ```
    ACCESS_SECRET_KEY=<any string>
    REFRESH_SECRET_KEY=<any string>
